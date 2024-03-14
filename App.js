@@ -1,20 +1,55 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Ionicons } from '@expo/vector-icons';
+import HomeScreen from './screens/HomeScreen';
+import CartScreen from './screens/CartScreen';
+import ProductsScreen from './screens/ProductsScreen';
+import ProfileScreen from './screens/ProfileScreen';
 
-export default function App() {
+const Tab = createBottomTabNavigator();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+            if (route.name === 'Home') {
+              iconName = focused ? 'home' : 'home-outline';
+            } else if (route.name === 'Cart') {
+              iconName = focused ? 'cart' : 'cart-outline';
+            } else if (route.name === 'Products') {
+              iconName = focused ? 'pricetag' : 'pricetag-outline';
+            } else if (route.name === 'Profile') {
+              iconName = focused ? 'person' : 'person-outline';
+            }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        })}
+        tabBarStyle={{
+          backgroundColor: 'white',
+          borderTopColor: 'transparent',
+        }}
+        tabBarItemStyle={{
+          marginVertical: 5,
+        }}
+        tabBarActiveTintColor="blue"
+        tabBarInactiveTintColor="gray"
+      >
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Cart" component={CartScreen} />
+        <Tab.Screen name="Products" component={ProductsScreen} />
+        <Tab.Screen name="Profile" component={ProfileScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default App;
+
+
+
