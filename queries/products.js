@@ -1,13 +1,24 @@
 import { BaseURL } from "../utils/constants";
 
-// Get all products
-export const getAllProducts = async () => {
-    const response = await fetch(`${BaseURL}`);
+// Get all categories
+export const getAllCategories = async () => {
+    const url = `${BaseURL}` + `products/categories`;
+    const response = await fetch(url);
     if (!response.ok) {
-        throw new Error('Error while fetching all products');
+        throw new Error('Error while fetching all categories');
     }
 
-    console.log("hola");
-    console.log(response.json);
+    return response.json();
+};
+
+// Get all products by category id
+export const getAllProductsByCategory = async (id) => {
+    const url = `${BaseURL}` + `products/category/${id}`;
+    console.log(url);
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error('Error while fetching all categories');
+    }
+    
     return response.json();
 };

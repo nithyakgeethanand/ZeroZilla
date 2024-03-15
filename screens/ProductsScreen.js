@@ -1,10 +1,20 @@
 import { View, Text, StyleSheet } from 'react-native'
+import { useQuery } from 'react-query';
 import React from 'react'
+import { getAllProductsByCategory } from '../queries/products';
 
-const ProductsScreen = () => {
+const ProductsScreen = ({route}) => {
+
+  // Get category Id
+  const { id } = route.params;
+
+  // Get all products by category id
+  const { data, isLoading, isError } = useQuery("getProductsByCategory", () => getAllProductsByCategory(id));
+
+  console.log(data);
   return (
     <View style={styles.container}>
-      <Text>ProductsScreen</Text>
+      <Text>{id}</Text>
     </View>
   )
 }

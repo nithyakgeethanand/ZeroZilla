@@ -1,37 +1,37 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet,TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
+import { useQuery } from 'react-query';
 import { BaseURL, screenHeight, screenWidth } from '../utils/constants';
-import { FlatList } from 'react-native-gesture-handler';
 import colors from '../utils/colors';
-import { TouchableOpacity } from 'react-native-web';
 import { useNavigation } from '@react-navigation/native';
+import LoadingElement from '../components/LoadingElement';
+import ErrorElement from  '../components/ErrorElement';
+import { getAllCategories } from '../queries/products';
+
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-  const [catagories, setCategories] = useState([]);
 
-  const getAllCategories = async () => {
-    try {
-      const url = BaseURL + 'products/categories';
-      const response = await fetch(url);
-      const json = await response.json();
-      setCategories(json);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+   // Get all Categories
+   const { data, isLoading, isError } = useQuery('getCategories', getAllCategories);
 
-  useEffect(() => {
-    getAllCategories();
-  }, []);
+   if (isLoading) {
+       return <LoadingElement />;
+   }
+
+   if (isError) {
+      return <ErrorElement />;
+   }
 
 
   return (
     <View style={styles.container}>
-      {catagories.map((item, index) =>
+      {data.map((item, index) =>
+        <TouchableOpacity onPress={() => navigation.navigate("ProductsScreen", { id: item })} key={index}>
           <View style={styles.categorieContainer}>
-            <Text key={index}  style={styles.catagorieText}>{item.charAt(0).toUpperCase() + item.slice(1)}</Text>
+            <Text style={styles.catagorieText}>{item.charAt(0).toUpperCase() + item.slice(1)}</Text>
           </View>
+        </TouchableOpacity>
       )}
     </View>
   )
