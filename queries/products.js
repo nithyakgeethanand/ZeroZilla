@@ -33,3 +33,14 @@ export const getAllProducts = async () => {
 
     return response.json();
 };
+
+// Get product details by product id
+export const getProductDetailsById = async (id) => {
+    const url = `${BaseURL}` + `products/${id}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error('Error while fetching product details');
+    }
+
+    return response.json();
+};

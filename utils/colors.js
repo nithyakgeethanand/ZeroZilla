@@ -3,4 +3,5 @@ export default {
     white: "#FFFFFF",
     gray: "#ECECEC",
     textInputBorderColor: "#ddd",
+    darkGray: "#A4A3A3"
 }

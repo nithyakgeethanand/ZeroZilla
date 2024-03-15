@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderRadius: 10,
     margin: 10,
-    padding: 10
+    padding: 10,
   },
   productPoster: {
     width: 150,
@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: 50,
     paddingLeft: 10,
+    marginBottom:10
   }
 
 })
