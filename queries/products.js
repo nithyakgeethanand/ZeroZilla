@@ -17,8 +17,19 @@ export const getAllProductsByCategory = async (id) => {
     console.log(url);
     const response = await fetch(url);
     if (!response.ok) {
-        throw new Error('Error while fetching all categories');
+        throw new Error('Error while fetching all products by categories');
     }
     
+    return response.json();
+};
+
+// Get all products
+export const getAllProducts = async () => {
+    const url = `${BaseURL}` + `products`;
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error('Error while fetching all products');
+    }
+
     return response.json();
 };

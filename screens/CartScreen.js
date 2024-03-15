@@ -4,7 +4,7 @@ import React from 'react'
 const CartScreen = () => {
   return (
     <View style={styles.container}>
-      <Text>CartScreen</Text>
+      <Text>No items in Cart</Text>
     </View>
   )
 }

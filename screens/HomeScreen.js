@@ -51,12 +51,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 10,
-    borderRadius: 15,
-    backgroundColor: colors.blue
+    borderWidth:1
   },
   catagorieText: {
-    fontSize: 30,
-    color: colors.white,
-    fontWeight: "bold"
+    fontSize: 25,
+    fontWeight:'300',
   }
 })
