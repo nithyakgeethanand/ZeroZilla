@@ -1,12 +1,14 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList, TextInput } from 'react-native'
 import { useQuery } from 'react-query';
-import React from 'react'
+import React, { useState } from 'react'
 import { getAllProductsByCategory, getAllProducts } from '../queries/products';
 import colors from '../utils/colors';
 import LoadingElement from '../components/LoadingElement';
 import ErrorElement from '../components/ErrorElement';
+import { useNavigation } from '@react-navigation/native';
 
 const ProductsScreen = ({ route }) => {
+  const navigation = useNavigation();
 
   // Get category Id
   const id = route.params ? route.params.id : null;
@@ -16,6 +18,8 @@ const ProductsScreen = ({ route }) => {
     id ? useQuery("getProductsByCategory", () => getAllProductsByCategory(id)) :
       useQuery("getProducts", getAllProducts);
 
+  const [searchQuery, setSearchQuery] = useState('');
+
   if (isLoading) {
     return <LoadingElement />;
   }
@@ -23,6 +27,10 @@ const ProductsScreen = ({ route }) => {
   if (isError) {
     return <ErrorElement />;
   }
+
+  const filteredData = data.filter(product =>
+    product.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const renderItem = ({ item }) => {
     return (
@@ -48,8 +56,13 @@ const ProductsScreen = ({ route }) => {
         fontWeight: "300",
         padding: 20
       }}>{id ? id.charAt(0).toUpperCase() + id.slice(1) : 'All products'}</Text>
-      <TextInput style={styles.textInputContainer} />
-      <FlatList data={data} renderItem={renderItem} />
+      <TextInput
+        style={styles.textInputContainer}
+        placeholder='Search products'
+        onChangeText={setSearchQuery}
+        value={searchQuery}
+      />
+      <FlatList data={filteredData} renderItem={renderItem} />
     </View>
   )
 }
@@ -89,21 +102,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "200",
     paddingTop: 5
+  },
+  textInputContainer: {
+    borderWidth: 1,
+    borderColor: colors.textInputBorderColor,
+    borderRadius: 5,
+    height: 50,
+    paddingLeft: 10,
   }
 
 })
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-//   imageContainer: {
-//     // width: screenWidth -50,
-//     // height: screenHeight / 2,
-//     width: 150,
-//     height: 150,
-//     resizeMode:'center'
-//   }
-// })

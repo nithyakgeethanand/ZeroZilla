@@ -7,6 +7,7 @@ import HomeScreen from './screens/HomeScreen';
 import CartScreen from './screens/CartScreen';
 import ProductsScreen from './screens/ProductsScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import ProductDetails from './screens/ProductDetails';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 const Tab = createBottomTabNavigator();
@@ -17,6 +18,7 @@ const HomeStack = () => (
   <Stack.Navigator initialRouteName='Home' screenOptions={{  headerShown: false }}>
     <Stack.Screen name='HomeScreen' component={HomeScreen} options={{ headerShown: false }} />
     <Stack.Screen name='ProductsScreen' component={ProductsScreen} options={{ headerTitle: '' }} />
+    <Stack.Screen name='ProductDetails' component={ProductDetails} options={{ headerTitle: '' }} />
   </Stack.Navigator>
 );
 
